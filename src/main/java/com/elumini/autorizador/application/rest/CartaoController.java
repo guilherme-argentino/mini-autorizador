@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.elumini.autorizador.application.request.CartaoRequest;
 import com.elumini.autorizador.application.response.CartaoResponse;
 import com.elumini.autorizador.domain.Cartao;
+import com.elumini.autorizador.domain.Cartao.CartaoBuilder;
 import com.elumini.autorizador.domain.service.CartaoService;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ public class CartaoController {
 	private final CartaoService service;
 
 	@PostMapping
-	public ResponseEntity<CartaoResponse> cria(CartaoRequest cartao) {
+	public ResponseEntity<CartaoResponse> cria(@RequestBody CartaoRequest cartao) {
 		Entry<Cartao, Boolean> result = service.cria(de(cartao));
 		return result.getValue() ? ResponseEntity.ok(de(result.getKey()))
 				: ResponseEntity.unprocessableEntity().body(de(result.getKey()));
@@ -37,11 +39,15 @@ public class CartaoController {
 	}
 
 	private Cartao de(CartaoRequest cartao) {
-		return null;
+		return CartaoBuilder.builder()
+				.withNumeroCartao(cartao.getNumeroCartao())
+				.withSenha(cartao.getSenha())
+				.withSaldo(BigDecimal.ZERO)
+				.build();
 	}
 
 	private CartaoResponse de(Cartao cartao) {
-		return null;
+		return new CartaoResponse(cartao.getNumeroCartao(), cartao.getSenha());
 	}
 
 }
