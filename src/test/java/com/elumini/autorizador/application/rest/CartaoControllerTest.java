@@ -1,12 +1,10 @@
 package com.elumini.autorizador.application.rest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
@@ -25,6 +23,7 @@ import com.elumini.autorizador.application.response.CartaoResponse;
 import com.elumini.autorizador.domain.Cartao;
 import com.elumini.autorizador.domain.service.CartaoService;
 import com.elumini.autorizador.util.JsonUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,6 +31,9 @@ class CartaoControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 	@MockBean
 	CartaoService service;
@@ -41,14 +43,14 @@ class CartaoControllerTest {
 
 		CartaoRequest inputCard = new CartaoRequest(BigDecimal.valueOf(1234567812345678L), 1234);
 		CartaoResponse resultCard = new CartaoResponse(BigDecimal.valueOf(1234567812345678L), 1234);
+		String resultCardString = objectMapper.writeValueAsString(resultCard);
 
 		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Cartao, Boolean>(
 				new Cartao(BigDecimal.valueOf(1234567812345678L), 1234, BigDecimal.ZERO), true));
 
 		mvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(inputCard)))
-				.andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].senha", is(resultCard.getSenha())))
-				.andExpect(jsonPath("$[1].numeroCartao", is(resultCard.getNumeroCartao())));
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().json(resultCardString));
 	}
 
 	@Test
@@ -56,14 +58,14 @@ class CartaoControllerTest {
 
 		CartaoRequest inputCard = new CartaoRequest(BigDecimal.valueOf(1234567812345678L), 1234);
 		CartaoResponse resultCard = new CartaoResponse(BigDecimal.valueOf(1234567812345678L), 1234);
+		String resultCardString = objectMapper.writeValueAsString(resultCard);
 
 		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Cartao, Boolean>(
 				new Cartao(BigDecimal.valueOf(1234567812345678L), 1234, BigDecimal.ZERO), false));
 
 		mvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(inputCard)))
-				.andDo(print()).andExpect(status().isUnprocessableEntity()).andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].senha", is(resultCard.getSenha())))
-				.andExpect(jsonPath("$[1].numeroCartao", is(resultCard.getNumeroCartao())));
+				.andDo(print()).andExpect(status().isUnprocessableEntity())
+				.andExpect(content().json(resultCardString));
 	}
 
 }
