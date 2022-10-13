@@ -1,10 +1,10 @@
 package com.elumini.autorizador.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import java.math.BigDecimal;
 import java.util.Map.Entry;
 import java.util.Optional;
 
@@ -32,9 +32,13 @@ class CartaoServiceTest {
 	@Test
 	void givenValidaCardData_whenCreatesCard_ReturnsInsertedCardAndTrue() {
 		
-		Cartao cartao = CartaoBuilder.builder().build();
+		Cartao cartao = CartaoBuilder.builder()
+				.withNumeroCartao(BigDecimal.valueOf(1234567812345678L))
+				.withSenha(1234)
+				.withSaldo(BigDecimal.ZERO)
+				.build();
 		
-		given(repository.findById(any())).willReturn(Optional.of(cartao));
+		given(repository.findById(any())).willReturn(Optional.ofNullable(null));
 		
 		Entry<Cartao, Boolean> result = service.cria(cartao);
 		
@@ -42,14 +46,16 @@ class CartaoServiceTest {
 		assertEquals(cartao.getNumeroCartao(), result.getKey().getNumeroCartao());
 		assertEquals(cartao.getSenha(), result.getKey().getSenha());
 		
-		fail("Not yet implemented");
-		
 	}
 	
 	@Test
 	void givenValidaCardData_whenCheckIfExists_ReturnsTrue() {
 		
-		Cartao cartao = CartaoBuilder.builder().build();
+		Cartao cartao = CartaoBuilder.builder()
+				.withNumeroCartao(BigDecimal.valueOf(1234567812345678L))
+				.withSenha(1234)
+				.withSaldo(BigDecimal.ZERO)
+				.build();
 		
 		given(repository.findById(any())).willReturn(Optional.of(cartao));
 		
