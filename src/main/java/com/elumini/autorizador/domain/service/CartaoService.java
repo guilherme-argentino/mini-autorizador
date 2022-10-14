@@ -1,5 +1,6 @@
 package com.elumini.autorizador.domain.service;
 
+import java.math.BigDecimal;
 import java.util.AbstractMap;
 import java.util.Map.Entry;
 
@@ -36,6 +37,11 @@ public class CartaoService {
 
 	public Boolean existe(Cartao cartao) {
 		return repository.findById(cartao.getNumeroCartao()).isPresent();
+	}
+
+	public BigDecimal saldoDe(BigDecimal numeroCartao) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

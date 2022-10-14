@@ -1,7 +1,9 @@
 package com.elumini.autorizador.application.rest;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -28,15 +30,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource(
-		  locations = "classpath:application-integrationtest.properties")
+@TestPropertySource(locations = "classpath:application-integrationtest.properties")
 class CartaoControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@MockBean
 	CartaoService service;
@@ -52,8 +53,7 @@ class CartaoControllerTest {
 				new Cartao(BigDecimal.valueOf(1234567812345678L), 1234, BigDecimal.ZERO), true));
 
 		mvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(inputCard)))
-				.andDo(print()).andExpect(status().isOk())
-				.andExpect(content().json(resultCardString));
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().json(resultCardString));
 	}
 
 	@Test
@@ -67,8 +67,28 @@ class CartaoControllerTest {
 				new Cartao(BigDecimal.valueOf(1234567812345678L), 1234, BigDecimal.ZERO), false));
 
 		mvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(inputCard)))
-				.andDo(print()).andExpect(status().isUnprocessableEntity())
-				.andExpect(content().json(resultCardString));
+				.andDo(print()).andExpect(status().isUnprocessableEntity()).andExpect(content().json(resultCardString));
+	}
+
+	@Test
+	void givenValidCard_whenQueryBalance_thenReturnSuccessWithBalanceInfo() throws Exception {
+		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
+		BigDecimal balance = BigDecimal.valueOf(495.15);
+
+		given(service.saldoDe(any())).willReturn(balance);
+
+		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string(is(balance)));
+	}
+
+	@Test
+	void givenValidCard_whenQueryBalance_thenReturUnprocessableEntity() throws Exception {
+		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
+		BigDecimal balance = BigDecimal.valueOf(495.15);
+
+		given(service.saldoDe(any())).willReturn(balance);
+
+		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isUnprocessableEntity());
 	}
 
 }
