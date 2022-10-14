@@ -39,7 +39,7 @@ public class CartaoService {
 		return repository.findById(cartao.getNumeroCartao()).isPresent();
 	}
 
-	public BigDecimal saldoDe(BigDecimal numeroCartao) {
+	public Entry<BigDecimal, Boolean> saldoDe(BigDecimal numeroCartao) {
 		// TODO Auto-generated method stub
 		return null;
 	}

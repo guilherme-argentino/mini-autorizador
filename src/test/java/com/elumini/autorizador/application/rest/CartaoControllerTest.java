@@ -75,7 +75,7 @@ class CartaoControllerTest {
 		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
 		BigDecimal balance = BigDecimal.valueOf(495.15);
 
-		given(service.saldoDe(any())).willReturn(balance);
+		given(service.saldoDe(any())).willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(balance, true));
 
 		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(is(balance)));
@@ -86,7 +86,7 @@ class CartaoControllerTest {
 		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
 		BigDecimal balance = BigDecimal.valueOf(495.15);
 
-		given(service.saldoDe(any())).willReturn(balance);
+		given(service.saldoDe(any())).willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(balance, false));
 
 		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isUnprocessableEntity());
 	}
