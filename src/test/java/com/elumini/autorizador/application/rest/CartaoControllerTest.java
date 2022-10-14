@@ -78,7 +78,7 @@ class CartaoControllerTest {
 		given(service.saldoDe(any())).willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(balance, true));
 
 		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(is(balance)));
+				.andExpect(content().string(is(balance.toString())));
 	}
 
 	@Test
