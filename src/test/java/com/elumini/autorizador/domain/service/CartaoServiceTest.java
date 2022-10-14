@@ -64,5 +64,26 @@ class CartaoServiceTest {
 		assertEquals(Boolean.TRUE, result);
 		
 	}
+	
+	@Test
+	void givenValidCardNumber_whenQueriesBalance_ReturnsBalanceAndTrue() {
+		
+		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
+		BigDecimal balance = BigDecimal.valueOf(495.15);
+		
+		Cartao cartao = CartaoBuilder.builder()
+				.withNumeroCartao(inputCardNumber)
+				.withSenha(1234)
+				.withSaldo(balance)
+				.build();
+		
+		given(repository.findById(any())).willReturn(Optional.of(cartao));
+		
+		Entry<BigDecimal, Boolean> result = service.saldoDe(inputCardNumber);
+		
+		assertEquals(Boolean.TRUE, result.getValue());
+		assertEquals(balance, result.getKey());
+		
+	}
 
 }

@@ -34,15 +34,16 @@ public class CartaoController {
 	}
 
 	@GetMapping("{numeroCartao}")
-	public BigDecimal saldo(@PathVariable BigDecimal numeroCartao) {
-		return null;
+	public ResponseEntity<?> saldo(@PathVariable BigDecimal numeroCartao) {
+		Entry<BigDecimal, Boolean> result = service.saldoDe(numeroCartao);
+		return result.getValue() ? ResponseEntity.ok(result.getKey()) : ResponseEntity.notFound().build();
 	}
 
 	private Cartao de(CartaoRequest cartao) {
-		return CartaoBuilder.builder()
-				.withNumeroCartao(cartao.getNumeroCartao())
-				.withSenha(cartao.getSenha())
-				.withSaldo(BigDecimal.ZERO)
+		return CartaoBuilder.builder() //
+				.withNumeroCartao(cartao.getNumeroCartao()) //
+				.withSenha(cartao.getSenha()) //
+				.withSaldo(BigDecimal.ZERO) //
 				.build();
 	}
 
