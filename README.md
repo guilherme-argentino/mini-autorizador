@@ -159,7 +159,7 @@ $ docker-compose up -d
 $ cd ..
 ```
 
-Escohi utilizar o banco MySQL e, portanto, é necessário criar as tabelas no banco de dados. Utilize o comando abaixo:
+Escolhi utilizar o banco MySQL e, portanto, é necessário criar as tabelas no banco de dados. Utilize o comando abaixo:
 ```shell
 $ mvn liquibase:update
 ```
