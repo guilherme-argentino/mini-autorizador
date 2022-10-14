@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 'mini-autorizador:altera-cartao'
+      author: guilherme-argentino
+      changes:
+        - modifyDataType:
+            columnName: numero_cartao
+            newDataType: char(22)
+            tableName: cartao_entity
+        - modifyDataType:
+            columnName: senha
+            newDataType: char(4)
+            tableName: cartao_entity

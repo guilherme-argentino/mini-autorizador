@@ -33,8 +33,8 @@ class CartaoServiceTest {
 	void givenValidaCardData_whenCreatesCard_ReturnsInsertedCardAndTrue() {
 		
 		Cartao cartao = CartaoBuilder.builder()
-				.withNumeroCartao(BigDecimal.valueOf(1234567812345678L))
-				.withSenha(1234)
+				.withNumeroCartao("1234567812345678")
+				.withSenha("1234")
 				.withSaldo(BigDecimal.ZERO)
 				.build();
 		
@@ -52,8 +52,8 @@ class CartaoServiceTest {
 	void givenValidaCardData_whenCheckIfExists_ReturnsTrue() {
 		
 		Cartao cartao = CartaoBuilder.builder()
-				.withNumeroCartao(BigDecimal.valueOf(1234567812345678L))
-				.withSenha(1234)
+				.withNumeroCartao("1234567812345678")
+				.withSenha("1234")
 				.withSaldo(BigDecimal.ZERO)
 				.build();
 		
@@ -68,12 +68,12 @@ class CartaoServiceTest {
 	@Test
 	void givenValidCardNumber_whenQueriesBalance_ReturnsBalanceAndTrue() {
 		
-		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
+		String inputCardNumber = "1234123412341234";
 		BigDecimal balance = BigDecimal.valueOf(495.15);
 		
 		Cartao cartao = CartaoBuilder.builder()
 				.withNumeroCartao(inputCardNumber)
-				.withSenha(1234)
+				.withSenha("1234")
 				.withSaldo(balance)
 				.build();
 		
