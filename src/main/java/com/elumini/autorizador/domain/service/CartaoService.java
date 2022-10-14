@@ -8,7 +8,7 @@ import com.elumini.autorizador.domain.repository.CartaoRepository;
 
 /**
  * 
- * <h2>Serviço do domínio para {@link Cartao}</h2>
+ * <h2>Serviço do domínio para a entidade {@link Cartao}</h2>
  * 
  * IMPORTANTE: para tornar este serviço livre de código de infraestrutura, os
  * frameworks que poderiam ser aplicados como o Spring Boot ou Lombok foram
