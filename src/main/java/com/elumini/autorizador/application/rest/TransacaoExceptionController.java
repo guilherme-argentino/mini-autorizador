@@ -10,21 +10,21 @@ import com.elumini.autorizador.domain.SenhaInvalidaException;
 import com.elumini.autorizador.domain.TransacaoStatus;
 
 @ControllerAdvice
-public class TransactionExceptionController {
+public class TransacaoExceptionController {
 	
 	@ExceptionHandler(value = SaldoInsuficienteException.class)
-	public ResponseEntity<TransacaoStatus> exception(SaldoInsuficienteException exception) {
-		return ResponseEntity.unprocessableEntity().body(TransacaoStatus.SALDO_INSUFICIENTE);
+	public ResponseEntity<String> exception(SaldoInsuficienteException exception) {
+		return ResponseEntity.unprocessableEntity().body(TransacaoStatus.SALDO_INSUFICIENTE.name());
 	}
 	
 	@ExceptionHandler(value = CartaoInexistenteException.class)
-	public ResponseEntity<TransacaoStatus> exception(CartaoInexistenteException exception) {
-		return ResponseEntity.unprocessableEntity().body(TransacaoStatus.CARTAO_INEXISTENTE);
+	public ResponseEntity<String> exception(CartaoInexistenteException exception) {
+		return ResponseEntity.unprocessableEntity().body(TransacaoStatus.CARTAO_INEXISTENTE.name());
 	}
 	
 	@ExceptionHandler(value = SenhaInvalidaException.class)
-	public ResponseEntity<TransacaoStatus> exception(SenhaInvalidaException exception) {
-		return ResponseEntity.unprocessableEntity().body(TransacaoStatus.SENHA_INVALIDA);
+	public ResponseEntity<String> exception(SenhaInvalidaException exception) {
+		return ResponseEntity.unprocessableEntity().body(TransacaoStatus.SENHA_INVALIDA.name());
 	}	
 
 }
