@@ -4,30 +4,30 @@ import java.math.BigDecimal;
 
 public class Cartao {
 
-	private BigDecimal numeroCartao;
-	private Integer senha;
+	private String numeroCartao;
+	private String senha;
 	private BigDecimal saldo;
 	
 	public Cartao() {
 		super();
 	}
 	
-	public Cartao(BigDecimal numeroCartao, Integer senha, BigDecimal saldo) {
+	public Cartao(String numeroCartao, String senha, BigDecimal saldo) {
 		super();
 		this.numeroCartao = numeroCartao;
 		this.senha = senha;
 		this.saldo = saldo;
 	}
-	public BigDecimal getNumeroCartao() {
+	public String getNumeroCartao() {
 		return numeroCartao;
 	}
-	public void setNumeroCartao(BigDecimal numeroCartao) {
+	public void setNumeroCartao(String numeroCartao) {
 		this.numeroCartao = numeroCartao;
 	}
-	public Integer getSenha() {
+	public String getSenha() {
 		return senha;
 	}
-	public void setSenha(Integer senha) {
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 	public BigDecimal getSaldo() {
@@ -39,16 +39,16 @@ public class Cartao {
 	
 	public static class CartaoBuilder {
 		
-		private BigDecimal numeroCartao;
-		private Integer senha;
+		private String numeroCartao;
+		private String senha;
 		private BigDecimal saldo;
 		
-		public CartaoBuilder withNumeroCartao(BigDecimal numeroCartao) {
+		public CartaoBuilder withNumeroCartao(String numeroCartao) {
 			this.numeroCartao = numeroCartao;
 			return this;
 		}
 
-		public CartaoBuilder withSenha(Integer senha) {
+		public CartaoBuilder withSenha(String senha) {
 			this.senha = senha;
 			return this;
 		}

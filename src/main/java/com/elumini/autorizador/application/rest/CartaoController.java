@@ -34,7 +34,7 @@ public class CartaoController {
 	}
 
 	@GetMapping("{numeroCartao}")
-	public ResponseEntity<?> saldo(@PathVariable BigDecimal numeroCartao) {
+	public ResponseEntity<?> saldo(@PathVariable String numeroCartao) {
 		Entry<BigDecimal, Boolean> result = service.saldoDe(numeroCartao);
 		return result.getValue() ? ResponseEntity.ok(result.getKey()) : ResponseEntity.notFound().build();
 	}

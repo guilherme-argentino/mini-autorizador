@@ -40,7 +40,7 @@ public class CartaoService {
 		return repository.findById(cartao.getNumeroCartao()).isPresent();
 	}
 
-	public Entry<BigDecimal, Boolean> saldoDe(BigDecimal numeroCartao) {
+	public Entry<BigDecimal, Boolean> saldoDe(String numeroCartao) {
 		// TODO Auto-generated method stub
 		Optional<Cartao> result = repository.findById(numeroCartao);
 		return result.isPresent() ? new AbstractMap.SimpleEntry<BigDecimal, Boolean>(result.get().getSaldo(), true)
