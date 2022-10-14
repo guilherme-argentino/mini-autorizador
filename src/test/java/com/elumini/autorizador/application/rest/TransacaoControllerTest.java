@@ -14,11 +14,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.elumini.autorizador.application.request.TransacaoRequest;
+import com.elumini.autorizador.domain.CartaoInexistenteException;
+import com.elumini.autorizador.domain.SaldoInsuficienteException;
+import com.elumini.autorizador.domain.SenhaInvalidaException;
 import com.elumini.autorizador.domain.Transacao;
 import com.elumini.autorizador.domain.Transacao.TransacaoBuilder;
 import com.elumini.autorizador.domain.TransacaoStatus;
@@ -33,7 +37,7 @@ class TransacaoControllerTest {
 	@Autowired
 	private MockMvc mvc;
 	
-	@Autowired
+	@MockBean
 	private TransacaoService service;
 
 	@Test
@@ -56,7 +60,7 @@ class TransacaoControllerTest {
 		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.valueOf(10.00));
 		Transacao transacao = TransacaoBuilder.builder().build();
 		
-		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Transacao, TransacaoStatus>(transacao, TransacaoStatus.SALDO_INSUFICIENTE));
+		given(service.cria(any())).willThrow(new SaldoInsuficienteException(transacao));
 		
 		mvc.perform(post("/transacoes") //
 				.contentType(MediaType.APPLICATION_JSON) //
@@ -71,7 +75,7 @@ class TransacaoControllerTest {
 		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.valueOf(10.00));
 		Transacao transacao = TransacaoBuilder.builder().build();
 		
-		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Transacao, TransacaoStatus>(transacao, TransacaoStatus.SENHA_INVALIDA));
+		given(service.cria(any())).willThrow(new SenhaInvalidaException(transacao));
 		
 		mvc.perform(post("/transacoes") //
 				.contentType(MediaType.APPLICATION_JSON) //
@@ -86,7 +90,7 @@ class TransacaoControllerTest {
 		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.valueOf(10.00));
 		Transacao transacao = TransacaoBuilder.builder().build();
 		
-		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Transacao, TransacaoStatus>(transacao, TransacaoStatus.CARTAO_INEXISTENTE));
+		given(service.cria(any())).willThrow(new CartaoInexistenteException(transacao));
 		
 		mvc.perform(post("/transacoes") //
 				.contentType(MediaType.APPLICATION_JSON) //
