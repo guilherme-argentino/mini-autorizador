@@ -88,7 +88,7 @@ class CartaoControllerTest {
 
 		given(service.saldoDe(any())).willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(balance, false));
 
-		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isUnprocessableEntity());
+		mvc.perform(get("/cartoes/" + inputCardNumber)).andDo(print()).andExpect(status().isNotFound());
 	}
 
 }
