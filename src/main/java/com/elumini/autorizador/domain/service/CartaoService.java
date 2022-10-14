@@ -3,6 +3,7 @@ package com.elumini.autorizador.domain.service;
 import java.math.BigDecimal;
 import java.util.AbstractMap;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import com.elumini.autorizador.domain.Cartao;
 import com.elumini.autorizador.domain.repository.CartaoRepository;
@@ -41,7 +42,9 @@ public class CartaoService {
 
 	public Entry<BigDecimal, Boolean> saldoDe(BigDecimal numeroCartao) {
 		// TODO Auto-generated method stub
-		return null;
+		Optional<Cartao> result = repository.findById(numeroCartao);
+		return result.isPresent() ? new AbstractMap.SimpleEntry<BigDecimal, Boolean>(result.get().getSaldo(), true)
+				: new AbstractMap.SimpleEntry<BigDecimal, Boolean>(BigDecimal.ZERO, false);
 	}
 
 }
