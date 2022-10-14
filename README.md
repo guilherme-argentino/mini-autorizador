@@ -132,3 +132,44 @@ Desafios (não obrigatórios):
  * é possível construir a solução inteira sem utilizar nenhum if. Só não pode usar *break* e *continue*! 
  * como garantir que 2 transações disparadas ao mesmo tempo não causem problemas relacionados à concorrência?
 Exemplo: dado que um cartão possua R$10.00 de saldo. Se fizermos 2 transações de R$10.00 ao mesmo tempo, em instâncias diferentes da aplicação, como o sistema deverá se comportar?
+
+# Como interagir com esta aplicação localmente 
+
+É necessário instalar algumas dependências
+
+* [Java JDK 8](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html) ou superior
+* [Docker](https://docs.docker.com/engine/install/) ou [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/), e [Docker Compose](https://docs.docker.com/compose/install/)
+* Uma IDE ([IntelliJ](https://www.jetbrains.com/help/idea/installation-guide.html) ou [Spring Tool Suite](https://spring.io/tools)) ou o motor de construção [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+
+Baixe esta aplicação clonando o respositório (necessário ter o [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)) ou baixando seu ZIP:
+```shell
+$ git clone git@github.com:guilherme-argentino/mini-autorizador.git
+$ cd mini-autorizador
+```
+
+Faça o build da aplicação com o seguinte comando:
+```shell
+$ mvn package
+```
+
+Suba o ambiente docker com os seguintes comandos:
+```shell
+$ cd docker
+$ docker-compose up -d
+$ cd ..
+```
+
+Escohi utilizar o banco MySQL e, portanto, é necessário criar as tabelas no banco de dados. Utilize o comando abaixo:
+```shell
+$ mvn liquibase:update
+```
+
+Por fim, rode a aplicação com o maven
+```shell
+$ mvn spring-boot:run 
+```
+
+ou diretamente com o java
+```shell
+$ java -jar target/mini-autorizador-0.0.1-SNAPSHOT.jar
+```
