@@ -38,8 +38,8 @@ class MysqlDbCartaoRepositoryTest {
 	@Test
 	void testFindById() {
 		CartaoEntity cartao = CartaoEntity.builder()
-				.numeroCartao(BigDecimal.valueOf(1234567812345678L))
-				.senha(1234)
+				.numeroCartao("1234567812345678")
+				.senha("1234")
 				.saldo(BigDecimal.ZERO)
 				.build();
 		
@@ -54,8 +54,8 @@ class MysqlDbCartaoRepositoryTest {
 	@Test
 	void testSave() {
 		Cartao cartao = CartaoBuilder.builder()
-				.withNumeroCartao(BigDecimal.valueOf(1234567812345678L))
-				.withSenha(1234)
+				.withNumeroCartao("1234567812345678")
+				.withSenha("1234")
 				.withSaldo(BigDecimal.ZERO)
 				.build();
 		

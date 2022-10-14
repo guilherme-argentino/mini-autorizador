@@ -45,12 +45,12 @@ class CartaoControllerTest {
 	@Test
 	void givenValidCardAndPass_whenCreateCard_thenReturnSuccessWithJsonData() throws Exception {
 
-		CartaoRequest inputCard = new CartaoRequest(BigDecimal.valueOf(1234567812345678L), 1234);
-		CartaoResponse resultCard = new CartaoResponse(BigDecimal.valueOf(1234567812345678L), 1234);
+		CartaoRequest inputCard = new CartaoRequest("1234567812345678", "1234");
+		CartaoResponse resultCard = new CartaoResponse("1234567812345678", "1234");
 		String resultCardString = objectMapper.writeValueAsString(resultCard);
 
 		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Cartao, Boolean>(
-				new Cartao(BigDecimal.valueOf(1234567812345678L), 1234, BigDecimal.ZERO), true));
+				new Cartao("1234567812345678", "1234", BigDecimal.ZERO), true));
 
 		mvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(inputCard)))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().json(resultCardString));
@@ -59,12 +59,12 @@ class CartaoControllerTest {
 	@Test
 	void givenValidCardAndPass_whenCreateCard_thenReturnUnprocessableEntityWithJsonData() throws Exception {
 
-		CartaoRequest inputCard = new CartaoRequest(BigDecimal.valueOf(1234567812345678L), 1234);
-		CartaoResponse resultCard = new CartaoResponse(BigDecimal.valueOf(1234567812345678L), 1234);
+		CartaoRequest inputCard = new CartaoRequest("1234567812345678", "1234");
+		CartaoResponse resultCard = new CartaoResponse("1234567812345678", "1234");
 		String resultCardString = objectMapper.writeValueAsString(resultCard);
 
 		given(service.cria(any())).willReturn(new AbstractMap.SimpleEntry<Cartao, Boolean>(
-				new Cartao(BigDecimal.valueOf(1234567812345678L), 1234, BigDecimal.ZERO), false));
+				new Cartao("1234567812345678", "1234", BigDecimal.ZERO), false));
 
 		mvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(inputCard)))
 				.andDo(print()).andExpect(status().isUnprocessableEntity()).andExpect(content().json(resultCardString));
@@ -72,7 +72,7 @@ class CartaoControllerTest {
 
 	@Test
 	void givenValidCard_whenQueryBalance_thenReturnSuccessWithBalanceInfo() throws Exception {
-		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
+		String inputCardNumber = "1234123412341234";
 		BigDecimal balance = BigDecimal.valueOf(495.15);
 
 		given(service.saldoDe(any())).willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(balance, true));
@@ -83,7 +83,7 @@ class CartaoControllerTest {
 
 	@Test
 	void givenValidCard_whenQueryBalance_thenReturUnprocessableEntity() throws Exception {
-		BigDecimal inputCardNumber = BigDecimal.valueOf(1234123412341234L);
+		String inputCardNumber = "1234123412341234";
 		BigDecimal balance = BigDecimal.valueOf(495.15);
 
 		given(service.saldoDe(any())).willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(balance, false));

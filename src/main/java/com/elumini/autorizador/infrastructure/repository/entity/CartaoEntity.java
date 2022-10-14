@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 public class CartaoEntity {
 	
 	@Id
-	private BigDecimal numeroCartao;
-	private Integer senha;
+	private String numeroCartao;
+	private String senha;
 	private BigDecimal saldo;
 
 }

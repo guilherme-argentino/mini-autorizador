@@ -1,6 +1,5 @@
 package com.elumini.autorizador.infrastructure.repository.mysql;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
@@ -21,7 +20,7 @@ public class MysqlDbCartaoRepository implements CartaoRepository {
 	private final SpringDataJpaCartaoRepository repo;
 
 	@Override
-	public Optional<Cartao> findById(BigDecimal id) {
+	public Optional<Cartao> findById(String id) {
 		// TODO Auto-generated method stub
 		return from(repo.findById(id));
 	}
