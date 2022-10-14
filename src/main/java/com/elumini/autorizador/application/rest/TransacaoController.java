@@ -10,7 +10,6 @@ import com.elumini.autorizador.application.request.TransacaoRequest;
 import com.elumini.autorizador.domain.Cartao.CartaoBuilder;
 import com.elumini.autorizador.domain.Transacao;
 import com.elumini.autorizador.domain.Transacao.TransacaoBuilder;
-import com.elumini.autorizador.domain.TransacaoStatus;
 import com.elumini.autorizador.domain.service.TransacaoService;
 
 import lombok.AllArgsConstructor;

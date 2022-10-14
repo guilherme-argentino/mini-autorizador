@@ -1,9 +1,11 @@
 package com.elumini.autorizador.domain;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class Transacao {
 	
+	private UUID id;
 	private Cartao cartao;
 	private BigDecimal valor;
 
@@ -12,8 +14,17 @@ public class Transacao {
 
 	public Transacao(Cartao cartao, BigDecimal valor) {
 		super();
+		this.id = UUID.randomUUID();
 		this.cartao = cartao;
 		this.valor = valor;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	public Cartao getCartao() {

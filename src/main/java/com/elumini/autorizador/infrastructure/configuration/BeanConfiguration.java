@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.elumini.autorizador.MiniAutorizadorApplication;
 import com.elumini.autorizador.domain.repository.CartaoRepository;
+import com.elumini.autorizador.domain.repository.TransacaoRepository;
 import com.elumini.autorizador.domain.service.CartaoService;
 import com.elumini.autorizador.domain.service.TransacaoService;
 
@@ -19,8 +20,8 @@ public class BeanConfiguration {
 	}
 	
 	@Bean
-	public TransacaoService transacaoService() {
-		return new TransacaoService();
+	public TransacaoService transacaoService(TransacaoRepository transacaoRepository) {
+		return new TransacaoService(transacaoRepository);
 	}
 
 }
