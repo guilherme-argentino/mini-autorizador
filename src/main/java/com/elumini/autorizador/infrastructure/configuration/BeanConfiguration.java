@@ -20,8 +20,8 @@ public class BeanConfiguration {
 	}
 	
 	@Bean
-	public TransacaoService transacaoService(TransacaoRepository transacaoRepository) {
-		return new TransacaoService(transacaoRepository);
+	public TransacaoService transacaoService(TransacaoRepository transacaoRepository, CartaoService cartaoService) {
+		return new TransacaoService(transacaoRepository, cartaoService);
 	}
 
 }

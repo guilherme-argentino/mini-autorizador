@@ -57,7 +57,7 @@ class TransacaoControllerTest {
 
 	@Test
 	void givenValidaTransactionData_whenCreatesTransaction_ReturnsLowBalance() throws Exception {
-		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.valueOf(10.00));
+		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.TEN);
 		Transacao transacao = TransacaoBuilder.builder().build();
 		
 		given(service.cria(any())).willThrow(new SaldoInsuficienteException(transacao));
@@ -72,7 +72,7 @@ class TransacaoControllerTest {
 
 	@Test
 	void givenTransactionDataWithIncorrectPassword_whenCreatesTransaction_ReturnsInvalidPassword() throws Exception {
-		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.valueOf(10.00));
+		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.TEN);
 		Transacao transacao = TransacaoBuilder.builder().build();
 		
 		given(service.cria(any())).willThrow(new SenhaInvalidaException(transacao));
@@ -87,10 +87,9 @@ class TransacaoControllerTest {
 
 	@Test
 	void givenTransactionDataWithInexistentCard_whenCreatesTransaction_ReturnsInexistentCard() throws Exception {
-		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.valueOf(10.00));
-		Transacao transacao = TransacaoBuilder.builder().build();
+		TransacaoRequest transacaoRequest = new TransacaoRequest("6549873025634501", "1234", BigDecimal.TEN);
 		
-		given(service.cria(any())).willThrow(new CartaoInexistenteException(transacao));
+		given(service.cria(any())).willThrow(new CartaoInexistenteException());
 		
 		mvc.perform(post("/transacoes") //
 				.contentType(MediaType.APPLICATION_JSON) //

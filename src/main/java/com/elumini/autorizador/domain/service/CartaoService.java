@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import com.elumini.autorizador.domain.Cartao;
+import com.elumini.autorizador.domain.CartaoInexistenteException;
 import com.elumini.autorizador.domain.repository.CartaoRepository;
 
 /**
@@ -38,6 +39,12 @@ public class CartaoService {
 
 	public Boolean existe(Cartao cartao) {
 		return repository.findById(cartao.getNumeroCartao()).isPresent();
+	}
+	
+	public Boolean senhaCorreta(Cartao cartao) {
+		Cartao result = repository.findById(cartao.getNumeroCartao()).orElseThrow(CartaoInexistenteException::new);
+		
+		return result.getSenha().equals(cartao.getSenha());
 	}
 
 	public Entry<BigDecimal, Boolean> saldoDe(String numeroCartao) {

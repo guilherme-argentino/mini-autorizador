@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.given;
 
 import java.math.BigDecimal;
 import java.util.Map.Entry;
+import java.util.AbstractMap;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -21,37 +22,42 @@ import com.elumini.autorizador.domain.repository.TransacaoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
-@TestPropertySource(
-  locations = "classpath:application-integrationtest.properties")
+@TestPropertySource(locations = "classpath:application-integrationtest.properties")
 class TransacaoServiceTest {
-	
+
 	@MockBean
 	TransacaoRepository repository;
-	
+
+	@MockBean
+	CartaoService cartaoService;
+
 	@Autowired
 	TransacaoService service;
-	
+
 	@Autowired
 	ObjectMapper objectMapper;
 
 	@Test
 	void givenValidTransactionData_whenCreatesTransaction_ReturnsSuccess() throws Exception {
-		Transacao transacao = TransacaoBuilder.builder()
-				.withCartao(CartaoBuilder.builder()
-						.withNumeroCartao("6549873025634501")
-						.withSenha("1234")
-						.build())
-				.withValor(BigDecimal.valueOf(10.00))
+		Transacao transacao = TransacaoBuilder.builder() //
+				.withCartao(CartaoBuilder.builder() //
+						.withNumeroCartao("6549873025634501") //
+						.withSenha("1234") //
+						.build()) //
+				.withValor(BigDecimal.TEN) //
 				.build();
-		
-		Transacao transacaoClonada = objectMapper
-			      .readValue(objectMapper.writeValueAsString(transacao), Transacao.class);
+
+		Transacao transacaoClonada = objectMapper.readValue(objectMapper.writeValueAsString(transacao),
+				Transacao.class);
 		transacaoClonada.setId(UUID.randomUUID());
-		
+
+		given(cartaoService.senhaCorreta(transacao.getCartao())).willReturn(true);
+		given(cartaoService.saldoDe(transacao.getCartao().getNumeroCartao()))
+				.willReturn(new AbstractMap.SimpleEntry<BigDecimal, Boolean>(BigDecimal.valueOf(500), true));
 		given(repository.save(transacao)).willReturn(transacaoClonada);
-		
+
 		Entry<Transacao, TransacaoStatus> result = service.cria(transacao);
-		
+
 		assertEquals(TransacaoStatus.OK, result.getValue());
 	}
 
