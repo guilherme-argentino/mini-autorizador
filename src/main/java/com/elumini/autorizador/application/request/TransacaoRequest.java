@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TransacaoRequest {
 	
 	private String numeroCartao;
-	private String senha;
+	private String senhaCartao;
 	private BigDecimal valor;
 
 }

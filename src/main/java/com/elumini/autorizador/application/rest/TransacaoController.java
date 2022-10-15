@@ -31,7 +31,7 @@ public class TransacaoController {
 		return TransacaoBuilder.builder() //
 				.withCartao(CartaoBuilder.builder() //
 						.withNumeroCartao(transacao.getNumeroCartao())
-						.withSenha(transacao.getSenha())
+						.withSenha(transacao.getSenhaCartao())
 						.build())
 				.withValor(transacao.getValor()) //
 				.build();
