@@ -14,6 +14,6 @@ public interface CartaoRepository {
 
 	Optional<Cartao> findById(String id);
 
-	void save(Cartao cartao);
+	Cartao save(Cartao cartao);
 
 }
