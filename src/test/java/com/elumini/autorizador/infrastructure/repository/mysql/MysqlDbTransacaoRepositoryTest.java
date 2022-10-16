@@ -41,7 +41,8 @@ public class MysqlDbTransacaoRepositoryTest {
 	 * org.hibernate.TransientPropertyValueException: object references an unsaved
 	 * transient instance - save the transient instance before flushing
 	 */
-	public void testSaveOk() {
+	@SuppressWarnings("unused")
+	private void testSaveOk() {
 
 		Transacao transacao = TransacaoBuilder.builder() //
 				.withCartao(CartaoBuilder.builder() //

@@ -41,7 +41,8 @@ class MysqlDbCartaoRepositoryTest {
 	 * org.hibernate.TransientPropertyValueException: object references an unsaved
 	 * transient instance - save the transient instance before flushing
 	 */
-	void testFindById() {
+	@SuppressWarnings("unused")
+	private void testFindById() {
 		CartaoEntity cartao = CartaoEntity.builder()
 				.numeroCartao("1234567812345678")
 				.senha("1234")
