@@ -25,7 +25,7 @@ public class CartaoCriadoListener {
 
 	private final TransacaoService service;
 
-	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
+	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	public void handleCartaoCriadoEvent(CartaoCriadoEvent event) {
 		log.debug("evento CartaoCriadoEvent iniciado");
 
@@ -34,6 +34,8 @@ public class CartaoCriadoListener {
 				.withValor(cargaInicial.multiply(BigDecimal.valueOf(-1))) //
 				.build();
 		service.cria(primeiraCarga);
+		
+		log.debug("evento CartaoCriadoEvent finalizado");
 	}
 
 }

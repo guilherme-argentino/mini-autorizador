@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.elumini.autorizador.domain.Cartao;
@@ -26,7 +27,7 @@ public class MysqlDbCartaoRepository implements CartaoRepository {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Cartao save(Cartao cartao) {
 		return from(repo.save(from(cartao)));
 

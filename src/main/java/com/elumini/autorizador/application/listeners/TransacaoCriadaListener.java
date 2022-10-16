@@ -21,7 +21,7 @@ public class TransacaoCriadaListener {
 
 	private final CartaoService service;
 
-	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
+	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	public void handleTransacaoCriadaEvent(TransacaoCriadaEvent event) {
 		log.debug("evento TransacaoCriadaEvent iniciado");
 
@@ -32,6 +32,8 @@ public class TransacaoCriadaListener {
 		cartao.setSaldo(saldo);
 
 		service.atualiza(cartao);
+		
+		log.debug("evento TransacaoCriadaEvent finalizado");
 	}
 
 }
