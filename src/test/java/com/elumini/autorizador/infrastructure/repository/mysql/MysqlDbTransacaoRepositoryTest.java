@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -41,7 +42,7 @@ public class MysqlDbTransacaoRepositoryTest {
 	 * org.hibernate.TransientPropertyValueException: object references an unsaved
 	 * transient instance - save the transient instance before flushing
 	 */
-	@SuppressWarnings("unused")
+	@Test
 	private void testSaveOk() {
 
 		Transacao transacao = TransacaoBuilder.builder() //
@@ -70,7 +71,8 @@ public class MysqlDbTransacaoRepositoryTest {
 	 * TODO: necessário verificar porque o sistema está inserindo o cartão, sendo
 	 * que foi explicitamente configurado para não fazer isso
 	 */
-	public void testSaveCartaoInexistente() {
+	@Test
+	private void testSaveCartaoInexistente() {
 
 		final Transacao transacao = TransacaoBuilder.builder() //
 				.withCartao(CartaoBuilder.builder() //

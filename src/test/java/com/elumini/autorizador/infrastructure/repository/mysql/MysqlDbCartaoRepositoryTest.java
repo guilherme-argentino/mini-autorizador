@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,6 +26,7 @@ import com.elumini.autorizador.infrastructure.repository.entity.CartaoEntity;
 		MysqlDbCartaoRepository.class
 })
 @DataJpaTest
+@DirtiesContext
 @TestPropertySource(
   locations = "classpath:application-integrationtest.properties")
 class MysqlDbCartaoRepositoryTest {
@@ -35,14 +37,8 @@ class MysqlDbCartaoRepositoryTest {
 	@Autowired
 	private MysqlDbCartaoRepository repository;
 
-
-	/**
-	 * FIXME: parou de funcionar com erro
-	 * org.hibernate.TransientPropertyValueException: object references an unsaved
-	 * transient instance - save the transient instance before flushing
-	 */
-	@SuppressWarnings("unused")
-	private void testFindById() {
+	@Test
+	public void testFindById() {
 		CartaoEntity cartao = CartaoEntity.builder()
 				.numeroCartao("1234567812345678")
 				.senha("1234")
@@ -58,7 +54,7 @@ class MysqlDbCartaoRepositoryTest {
 	}
 
 	@Test
-	void testSave() {
+	public void testSave() {
 		Cartao cartao = CartaoBuilder.builder()
 				.withNumeroCartao("1234567812345678")
 				.withSenha("1234")
