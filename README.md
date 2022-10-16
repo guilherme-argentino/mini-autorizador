@@ -171,5 +171,5 @@ $ mvn spring-boot:run
 
 ou diretamente com o java
 ```shell
-$ java -jar target/mini-autorizador-0.0.1-SNAPSHOT.jar
+$ java -jar target/mini-autorizador-0.9.0-SNAPSHOT.jar
 ```

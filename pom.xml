@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.elumini</groupId>
 	<artifactId>mini-autorizador</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9.0-SNAPSHOT</version>
 	<name>mini-autorizador</name>
 	<description>Mini Autorizador para VR e Elumini IT</description>
 	<properties>
