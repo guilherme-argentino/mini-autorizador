@@ -40,17 +40,21 @@ public class CartaoService {
 	public Boolean existe(Cartao cartao) {
 		return repository.findById(cartao.getNumeroCartao()).isPresent();
 	}
-	
+
 	public Boolean senhaCorreta(Cartao cartao) {
 		Cartao result = repository.findById(cartao.getNumeroCartao()).orElseThrow(CartaoInexistenteException::new);
-		
+
 		return result.getSenha().equals(cartao.getSenha());
 	}
 
+	public Entry<Cartao, Boolean> atualiza(Cartao cartao) {
+		return new AbstractMap.SimpleEntry<Cartao, Boolean>(repository.save(cartao), true);
+	}
+
 	public Entry<BigDecimal, Boolean> saldoDe(String numeroCartao) {
-		// TODO Auto-generated method stub
 		Optional<Cartao> result = repository.findById(numeroCartao);
-		return result.isPresent() ? new AbstractMap.SimpleEntry<BigDecimal, Boolean>(result.get().getSaldo(), true)
+		return result.isPresent() //
+				? new AbstractMap.SimpleEntry<BigDecimal, Boolean>(result.get().getSaldo(), true)
 				: new AbstractMap.SimpleEntry<BigDecimal, Boolean>(BigDecimal.ZERO, false);
 	}
 

@@ -2,6 +2,7 @@ package com.elumini.autorizador.infrastructure.repository.mysql;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.elumini.autorizador.domain.Cartao.CartaoBuilder;
 import com.elumini.autorizador.domain.Transacao;
@@ -20,6 +21,7 @@ public class MysqlDbTransacaoRepository implements TransacaoRepository {
 	private final SpringDataJpaTransacaoRepository repository;
 
 	@Override
+	@Transactional
 	public Transacao save(Transacao transacao) {
 		return de(repository.save(de(transacao)));
 	}

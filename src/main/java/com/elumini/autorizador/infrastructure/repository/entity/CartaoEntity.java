@@ -3,9 +3,12 @@ package com.elumini.autorizador.infrastructure.repository.entity;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+
+import com.elumini.autorizador.infrastructure.repository.listeners.CartaoListener;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(CartaoListener.class)
 @NoArgsConstructor(access = AccessLevel.MODULE)
 public class CartaoEntity {
 	

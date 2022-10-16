@@ -45,7 +45,7 @@ public class MysqlDbTransacaoRepositoryTest {
 						.build()) //
 				.withValor(BigDecimal.TEN) //
 				.build();
-		
+
 		entityManager.persistAndFlush(CartaoEntity.builder() //
 				.numeroCartao("1234123412341234") //
 				.senha("1234") //
@@ -60,7 +60,10 @@ public class MysqlDbTransacaoRepositoryTest {
 
 	}
 
-	@Test
+	/**
+	 * TODO: necessário verificar porque o sistema está inserindo o cartão, sendo
+	 * que foi explicitamente configurado para não fazer isso
+	 */
 	public void testSaveCartaoInexistente() {
 
 		final Transacao transacao = TransacaoBuilder.builder() //

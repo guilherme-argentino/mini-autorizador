@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/db.changelog-sql-cartao.sql
   - include:
       file: db/changelog/db.changelog-yml-altera-cartao.yml
+  - include:
+      file: db/changelog/db.changelog-sql-transacao.sql

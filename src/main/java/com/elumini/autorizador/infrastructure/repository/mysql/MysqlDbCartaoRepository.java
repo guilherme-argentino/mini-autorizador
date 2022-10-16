@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.elumini.autorizador.domain.Cartao;
 import com.elumini.autorizador.domain.Cartao.CartaoBuilder;
@@ -21,14 +22,13 @@ public class MysqlDbCartaoRepository implements CartaoRepository {
 
 	@Override
 	public Optional<Cartao> findById(String id) {
-		// TODO Auto-generated method stub
 		return from(repo.findById(id));
 	}
 
 	@Override
-	public void save(Cartao cartao) {
-		// TODO Auto-generated method stub
-		repo.save(from(cartao));
+	@Transactional
+	public Cartao save(Cartao cartao) {
+		return from(repo.save(from(cartao)));
 
 	}
 
@@ -41,12 +41,15 @@ public class MysqlDbCartaoRepository implements CartaoRepository {
 	}
 
 	private Optional<Cartao> from(Optional<CartaoEntity> cartaoEntity) {
-		// TODO Auto-generated method stub
-		return cartaoEntity.map((tempCartaoEntity) -> CartaoBuilder.builder()
-				.withNumeroCartao(tempCartaoEntity.getNumeroCartao())
-				.withSaldo(tempCartaoEntity.getSaldo())
-				.withSenha(tempCartaoEntity.getSenha())
-				.build());
+		return cartaoEntity.map((tempCartaoEntity) -> from(tempCartaoEntity));
+	}
+
+	private Cartao from(CartaoEntity cartaoEntity) {
+		return CartaoBuilder.builder()
+				.withNumeroCartao(cartaoEntity.getNumeroCartao())
+				.withSaldo(cartaoEntity.getSaldo())
+				.withSenha(cartaoEntity.getSenha())
+				.build();
 	}
 
 }
