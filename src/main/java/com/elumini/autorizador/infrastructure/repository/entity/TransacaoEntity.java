@@ -34,7 +34,7 @@ public class TransacaoEntity {
 	/**
 	 * FIXME: configuração ainda deixa preencher os dados do cartão e salvá-los
 	 */
-	@ManyToOne(cascade={CascadeType.DETACH,CascadeType.REFRESH})
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.REFRESH})
 	private CartaoEntity cartao;
 	
 	private BigDecimal valor;
