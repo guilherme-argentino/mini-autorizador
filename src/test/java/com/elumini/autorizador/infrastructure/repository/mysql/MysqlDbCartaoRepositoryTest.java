@@ -54,7 +54,7 @@ class MysqlDbCartaoRepositoryTest {
 	}
 
 	@Test
-	void testSave() {
+	public void testSave() {
 		Cartao cartao = CartaoBuilder.builder()
 				.withNumeroCartao("1234567812345678")
 				.withSenha("1234")
