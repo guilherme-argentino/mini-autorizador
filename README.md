@@ -1,3 +1,5 @@
+![main workflow](https://github.com/guilherme-argentino/mini-autorizador/actions/workflows/maven.yml/badge.svg)
+
 # Teste de programação - VR Benefícios
 
 Como parte do processo de seleção, gostaríamos que você desenvolvesse um pequeno sistema, para que possamos ver melhor o seu trabalho.
