@@ -3,6 +3,7 @@ package com.elumini.autorizador.domain.service;
 import java.math.BigDecimal;
 import java.util.AbstractMap;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import com.elumini.autorizador.domain.SaldoInsuficienteException;
 import com.elumini.autorizador.domain.SenhaInvalidaException;
@@ -30,6 +31,10 @@ public class TransacaoService {
 			throw new SaldoInsuficienteException(transacao);
 		}
 		return new AbstractMap.SimpleEntry<Transacao, TransacaoStatus>(repository.save(transacao), TransacaoStatus.OK);
+	}
+
+	public Transacao findById(UUID id) {
+		return repository.findById(id);
 	}
 	
     private boolean greaterThan(BigDecimal left, BigDecimal right) {

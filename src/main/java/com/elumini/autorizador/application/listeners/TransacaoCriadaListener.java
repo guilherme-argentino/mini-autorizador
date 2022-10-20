@@ -25,13 +25,19 @@ public class TransacaoCriadaListener {
 	public void handleTransacaoCriadaEvent(TransacaoCriadaEvent event) {
 		log.debug("evento TransacaoCriadaEvent iniciado");
 
-		Transacao transacao = event.getTransacao();
-		Cartao cartao = transacao.getCartao();
+		try {
+			Transacao transacao = event.getTransacao();
+			Cartao cartao = service.findById(transacao.getCartao().getNumeroCartao());
 
-		BigDecimal saldo = cartao.getSaldo().subtract(transacao.getValor());
-		cartao.setSaldo(saldo);
+			BigDecimal saldo = cartao.getSaldo().subtract(transacao.getValor());
+			cartao.setSaldo(saldo);
+			transacao.setCartao(cartao);
 
-		service.atualiza(cartao);
+			service.atualiza(cartao);
+		} catch (Exception e) {
+			log.debug("evento TransacaoCriadaEvent finalizado com erro!!", e);
+			throw e;
+		}
 		
 		log.debug("evento TransacaoCriadaEvent finalizado");
 	}

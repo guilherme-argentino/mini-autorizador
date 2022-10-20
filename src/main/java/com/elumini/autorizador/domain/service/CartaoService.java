@@ -58,4 +58,9 @@ public class CartaoService {
 				: new AbstractMap.SimpleEntry<BigDecimal, Boolean>(BigDecimal.ZERO, false);
 	}
 
+	public Cartao findById(String numeroCartao) {
+		// TODO Auto-generated method stub
+		return repository.findById(numeroCartao).orElseThrow(CartaoInexistenteException::new);
+	}
+
 }

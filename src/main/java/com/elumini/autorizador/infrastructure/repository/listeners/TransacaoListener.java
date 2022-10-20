@@ -18,8 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class TransacaoListener {
 
+	private final ApplicationEventPublisher publisher;
+
 	@Autowired
-	private ApplicationEventPublisher publisher;
+	public TransacaoListener(ApplicationEventPublisher publisher) {
+		super();
+		this.publisher = publisher;
+	}
 
 	@PostPersist
 	private void anyPersist(TransacaoEntity entity) {
