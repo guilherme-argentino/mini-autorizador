@@ -1,5 +1,10 @@
 package com.elumini.autorizador.infrastructure.repository.mysql;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,7 +29,16 @@ public class MysqlDbTransacaoRepository implements TransacaoRepository {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Transacao save(Transacao transacao) {
-		return de(repository.save(de(transacao)));
+		TransacaoEntity result = repository.save(de(transacao));
+		// forçando refresh
+		repository.flush();
+		return de(repository.findById(result.getId())).orElseThrow(EntityNotFoundException::new);
+	}
+
+	@Override
+	public Transacao findById(UUID id) {
+		// TODO Auto-generated method stub
+		return de(repository.findById(id)).orElseThrow(EntityNotFoundException::new);
 	}
 
 	private TransacaoEntity de(Transacao transacao) {
@@ -36,6 +50,10 @@ public class MysqlDbTransacaoRepository implements TransacaoRepository {
 						.build()) //
 				.valor(transacao.getValor()) //
 				.build();
+	}
+
+	private Optional<Transacao> de(Optional<TransacaoEntity> transacaoEntity) {
+		return transacaoEntity.map((tempTransacaoEntity) -> de(tempTransacaoEntity));
 	}
 
 	private Transacao de(TransacaoEntity transacao) {
